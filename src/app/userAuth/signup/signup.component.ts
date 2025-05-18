@@ -5,6 +5,8 @@ import moment from 'moment';
 import { AuthserviceService } from '../authservice.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterEvent, RouterOutlet } from '@angular/router';
+import { CommonService } from '../../service/common.service';
+
 
 declare var $: any;
 
@@ -18,7 +20,10 @@ declare var $: any;
 export class SignupComponent implements OnInit{
 
   userSignup!: FormGroup;
-  constructor(private _fb:FormBuilder, private _router:Router){}
+  constructor(private _fb:FormBuilder, 
+    private _router:Router, 
+    private _common:CommonService, 
+    private _auth:AuthserviceService  ){}
   ngOnInit(): void {
     this.initForm();
   }
@@ -50,14 +55,21 @@ export class SignupComponent implements OnInit{
     })
   }
 
-  // Data save Model 
+  // Data before save validation Model 
   datamodel(){
-    tdate:new Date()
-    fName: this.userSignup.value.name == null || this.userSignup.value.name == undefined ? "" : this.userSignup.value.name;
-    email: this.userSignup.value.email == null || this.userSignup.value.email == undefined ? "" : this.userSignup.value.email;
-    contact: this.userSignup.value.contact == null || this.userSignup.value.contact == undefined ? "" : this.userSignup.value.contact;
-    password: this.userSignup.value.password == null || this.userSignup.value.password == undefined ? "" : this.userSignup.value.password;
-    role: this.userSignup.value.role == null || this.userSignup.value.role == undefined ? "" : this.userSignup.value.role;
+    try{
+      let model = {
+        tdate:new Date(),
+        fName: this.userSignup.value.name == null || this.userSignup.value.name == undefined ? "" : this.userSignup.value.name,
+        email: this.userSignup.value.email == null || this.userSignup.value.email == undefined ? "" : this.userSignup.value.email,
+        contact: this.userSignup.value.contact == null || this.userSignup.value.contact == undefined ? "" : this.userSignup.value.contact,
+        password: this.userSignup.value.password == null || this.userSignup.value.password == undefined ? "" : this.userSignup.value.password,
+        role: this.userSignup.value.role == null || this.userSignup.value.role == undefined ? "" : this.userSignup.value.role,
+      }
+    }catch(error){
+      return;
+    }
+   
   }
 
   // check all value is Valid or not send ngPrime Alert 
@@ -79,18 +91,38 @@ export class SignupComponent implements OnInit{
   }
 
 
-  // Data Submit function 
+
+  // Submit Token
   onSubmit(){
-    this.isFormValid();
+  
+    this.isFormValid();   // pwd valid
+    let model; model= this.datamodel();  // validation
+    let resp = this._auth.signup(model).subscribe(res=>{
+      if ((res["status"] == false)){
+        // model pop unsuccess
+
+      }
+      else if((res["status"] == true)){
+        // model pop success
+        sessionStorage.setItem("email", this.userSignup.value.email);
+        sessionStorage.setItem("pwd", this.userSignup.value.password);
+      }
+    });
+    
     if (this.userSignup.valid) {
-      console.log('Form Submitted', this.userSignup.value);
+      // this._common.setToken(token);         // Return Token value are saved. 
+      this._router.navigate(['/deshboard']);// After token save go to Dashboard.
     } else {
       console.warn('Form Invalid');
     }
   }
 
+  // go to forget comp,
+  // 
+
+  // signIn Btn
   signin(){
-    this._router.navigate(['/login'])
+    this._router.navigate(['/login']);
   }
 
 }

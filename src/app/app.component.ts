@@ -6,6 +6,7 @@ import { IndexComponent } from './main/index/index.component';
 import { LoginComponent } from './userAuth/login/login.component';
 import { SignupComponent } from './userAuth/signup/signup.component';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, RangeValueAccessor } from '@angular/forms';
+import { CommonService } from './service/common.service';
 
 
 @Component({
@@ -17,4 +18,16 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl, RangeValueA
 })
 export class AppComponent {
   title = 'admin';
+  isVisible:boolean = false;
+ 
+  constructor(private _common:CommonService){}
+
+ ngOnInit(){
+  // let isvalid = this._common.getHostingName();
+
+ }
+
+
+
+
 }
