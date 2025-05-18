@@ -11,13 +11,10 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl, RangeValueA
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [SignupComponent],
+  imports: [RouterOutlet, HeaderComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'admin';
-
-
-
 }

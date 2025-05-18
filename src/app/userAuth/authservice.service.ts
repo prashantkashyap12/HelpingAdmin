@@ -8,11 +8,11 @@ import { CommonService } from '../service/common.service';
 })
 export class AuthserviceService {
 
-  constructor(private http: HttpClient, private _common:CommonService) { }
+  // constructor(private http: HttpClient, private _common:CommonService) { }
 
-  signup(model:any): Observable<any> {
-    let url = "/MMI/Master/cityList";
-    return this.http.post(this._common.getHostUrl()+url, model, this._common.getHeaderOptions())
-  }
+  // signup(model:any): Observable<any> {
+  //   let url = "/MMI/Master/cityList";
+  //   return this.http.post(this._common.getHostUrl()+url, model, this._common.getHeaderOptions())
+  // }
 }
 
