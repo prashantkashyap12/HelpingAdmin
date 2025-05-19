@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } 
 import moment from 'moment';
 import { AuthserviceService } from '../authservice.service';
 import { CommonModule } from '@angular/common';
-import { Router, RouterEvent, RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
 import { CommonService } from '../../service/common.service';
 
 
@@ -23,8 +23,9 @@ export class SignupComponent implements OnInit{
   constructor(private _fb:FormBuilder, 
     private _router:Router, 
     private _common:CommonService, 
-    private _auth:AuthserviceService  ){}
-  ngOnInit(): void {
+    // private _auth:AuthserviceService 
+   ){}
+  ngOnInit() {
     this.initForm();
   }
 
@@ -32,8 +33,8 @@ export class SignupComponent implements OnInit{
 
   // Password Validator
   PwdValidator(){
-    let pwd = this.userSignup.get("passwrod");
-    let pwd2 = this.userSignup.get("rePasswrod");
+    let pwd = this.userSignup.get("passwrod")?.value;
+    let pwd2 = this.userSignup.get("rePasswrod")?.value;
     if(pwd == pwd2){
       return null
     }else{
@@ -49,7 +50,7 @@ export class SignupComponent implements OnInit{
       fName:['', [Validators.required]],
       email:['', [Validators.required]],
       contact: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
-      password: ['', [Validators.required, Validators.minLength(6)], Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')]],
       rePassword: ['', [Validators.required, Validators.minLength(6)], Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')],
       role:['user', [Validators.required]],
     })
@@ -60,16 +61,15 @@ export class SignupComponent implements OnInit{
     try{
       let model = {
         tdate:new Date(),
-        fName: this.userSignup.value.name == null || this.userSignup.value.name == undefined ? "" : this.userSignup.value.name,
-        email: this.userSignup.value.email == null || this.userSignup.value.email == undefined ? "" : this.userSignup.value.email,
-        contact: this.userSignup.value.contact == null || this.userSignup.value.contact == undefined ? "" : this.userSignup.value.contact,
-        password: this.userSignup.value.password == null || this.userSignup.value.password == undefined ? "" : this.userSignup.value.password,
-        role: this.userSignup.value.role == null || this.userSignup.value.role == undefined ? "" : this.userSignup.value.role,
+        fName: this.userSignup.value.fName ?? '',
+        email: this.userSignup.value.email ?? '',
+        contact: this.userSignup.value.contact ?? '',
+        password: this.userSignup.value.password ?? '',
+        role: this.userSignup.value.role ?? '',
       }
     }catch(error){
       return;
     }
-   
   }
 
   // check all value is Valid or not send ngPrime Alert 
@@ -94,31 +94,19 @@ export class SignupComponent implements OnInit{
 
   // Submit Token
   onSubmit(){
-  
     this.isFormValid();   // pwd valid
-    let model; model= this.datamodel();  // validation
-    let resp = this._auth.signup(model).subscribe(res=>{
-      if ((res["status"] == false)){
-        // model pop unsuccess
-
-      }
-      else if((res["status"] == true)){
-        // model pop success
-        sessionStorage.setItem("email", this.userSignup.value.email);
-        sessionStorage.setItem("pwd", this.userSignup.value.password);
-      }
-    });
-    
-    if (this.userSignup.valid) {
-      // this._common.setToken(token);         // Return Token value are saved. 
-      this._router.navigate(['/deshboard']);// After token save go to Dashboard.
-    } else {
-      console.warn('Form Invalid');
-    }
+    let model;
+    model= this.datamodel();  // validation
+    // let resp = this._auth.signup(model).subscribe(res=>{
+    //   if((res["status"] == true)){
+    //     // Add Model_POP success
+    //     sessionStorage.setItem("email", this.userSignup.value.email);
+    //     sessionStorage.setItem("pwd", this.userSignup.value.password);
+    //     this._router.navigate(['/verify']);
+    //   }
+    // });
   }
 
-  // go to forget comp,
-  // 
 
   // signIn Btn
   signin(){

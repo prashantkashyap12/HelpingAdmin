@@ -22,7 +22,9 @@ export class CommonService {
     return httpOptions;
   }
 
-
+  // getHostUrl(){
+    
+  // }
   // Set Token
 
 
