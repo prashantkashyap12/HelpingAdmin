@@ -14,6 +14,7 @@ declare var $: any;
   selector: 'app-signup',
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule, CommonModule],
+  providers: [AuthserviceService], 
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
@@ -97,6 +98,8 @@ export class SignupComponent implements OnInit{
     this.isFormValid();   // pwd valid
     let model;
     model= this.datamodel();  // validation
+
+    
     // let resp = this._auth.signup(model).subscribe(res=>{
     //   if((res["status"] == true)){
     //     // Add Model_POP success

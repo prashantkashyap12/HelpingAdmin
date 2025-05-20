@@ -49,7 +49,6 @@ onSubmit(){
   let token;
   this._common.setToken(token);         // Return Token value are saved. 
   this._router.navigate(['/deshboard']);// After token save go to Dashboard.
-  
 }
 
 
