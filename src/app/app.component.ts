@@ -24,7 +24,6 @@ export class AppComponent {
 
  ngOnInit(){
   // let isvalid = this._common.getHostingName();
-
  }
 
 

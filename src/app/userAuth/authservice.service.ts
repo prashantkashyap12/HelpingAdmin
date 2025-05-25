@@ -11,8 +11,12 @@ export class AuthserviceService {
   constructor(private http: HttpClient, private _common:CommonService) { }
 
   signup(model:any):Observable<any> {
-    let url = "/MMI/Master/cityList";
-    return  this.http.post(this._common.getBaseUrl()+url, model)
+    let url = "http://localhost:5181/api/Signup/signup";
+    return  this.http.post(url, model)
+  }
+  varify(model:any):Observable<any>{
+    let url = "http://localhost:5181/api/Signup/ForgetGen2";
+    return this.http.post(url, model)
   }
 }
 
