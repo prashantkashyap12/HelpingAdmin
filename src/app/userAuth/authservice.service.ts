@@ -18,5 +18,11 @@ export class AuthserviceService {
     let url = "http://localhost:5181/api/Signup/ForgetGen2";
     return this.http.post(url, model)
   }
+
+  signIn(model:any):Observable<any>{
+    let url = "http://localhost:5181/api/Signup/Signin";
+    return this.http.post(url, model);
+  }
+  
 }
 
