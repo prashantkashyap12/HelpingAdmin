@@ -23,6 +23,5 @@ export class AuthserviceService {
     let url = "http://localhost:5181/api/Signup/Signin";
     return this.http.post(url, model);
   }
-  
 }
 
