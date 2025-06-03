@@ -1,0 +1,21 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* loader */
+.loadingreport {
+    height: 100vh !important;
+    width: 100% !important;
+    background-position: center;
+    background-size: 200px;
+    position: fixed;
+    background-repeat: no-repeat;
+    padding: 0;
+    margin: auto;
+    top: 0px;
+    z-index: 999;
+    background-image: url(./assets/loader123.gif);
+    background-color: rgba(0, 0, 0, 0.5);
+}
