@@ -12,15 +12,16 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   
   constructor( @Inject(PLATFORM_ID) private platformId: Object, private _router:Router){
-  }
-  ngOnInit(){
     this.init();  
   }
+  ngOnInit(){
+  }
+  
   userName:any ;
   userProfile:any;
   init(){
     let userProfile
-    let userName
+     let userName
     if (isPlatformBrowser(this.platformId)) {
       userProfile = sessionStorage.getItem('role');
       userName = sessionStorage.getItem('user');
@@ -29,10 +30,9 @@ export class HeaderComponent {
     this.userProfile = userProfile ?? '';
   }
 
-
-  // index(){
-  //   this._router.navigate(['/deshboard']);
-  // }
+  index(){
+    this._router.navigate(['/deshboard']);
+  }
   profile(){
     this._router.navigate(['/profileupdate']);
   }

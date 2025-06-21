@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit{
       if(res.state == true){
         sessionStorage.setItem('email', this.signupForm.value.email);
         sessionStorage.setItem('password', this.signupForm.value.password);
-        sessionStorage.setItem('token', res.Token);
+        sessionStorage.setItem('token', res.token);
         this._router.navigate(['/deshboard']);
       }else{
         console.log(res);
